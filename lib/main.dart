@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_commit_list_app/screens/commits_screen.dart';
+import 'package:flutter_commit_list_app/screens/user_profile_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -7,14 +9,12 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-
-        primarySwatch: Colors.lightBlue,
+        scaffoldBackgroundColor: Colors.grey[850],
       ),
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
@@ -38,27 +38,19 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
   static const List<Widget> _pages = <Widget>[
-    Icon(
-      Icons.call,
-      size: 150,
-    ),
-    Icon(
-      Icons.camera,
-      size: 150,
-    ),
+    CommitsScreen(),
+    UserProfileScreen(),
   ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   title: const Text('BottomNavigationBar Demo'),
-      // ),
       body: Center(
-        child: _pages.elementAt(_selectedIndex), //New
+        child: _pages.elementAt(_selectedIndex),
       ),
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Colors.black87,
         unselectedItemColor: Colors.blue[900],
+        selectedItemColor: Colors.blueAccent,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.ac_unit),
