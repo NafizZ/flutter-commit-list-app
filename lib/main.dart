@@ -48,7 +48,7 @@ class _MyHomePageState extends State<MyHomePage> {
         child: _pages.elementAt(_selectedIndex),
       ),
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.black87,
+        backgroundColor: Colors.black54,
         unselectedItemColor: Colors.blue[900],
         selectedItemColor: Colors.blueAccent,
         items: const <BottomNavigationBarItem>[

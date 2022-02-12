@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_commit_list_app/http/http_service.dart';
 
 class CommitsScreen extends StatefulWidget {
   const CommitsScreen({ Key? key }) : super(key: key);
@@ -8,10 +9,31 @@ class CommitsScreen extends StatefulWidget {
 }
 
 class _CommitsScreenState extends State<CommitsScreen> {
+  final HttpService httpService = HttpService();
+  bool isloading = true;
+  late List<dynamic> gitCommitsData;
   final List<String> entries = <String>['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K'];
+
+  getGitCommits() async{
+    gitCommitsData = await httpService.getGitCommits();
+    print("gitCommitsData: ${gitCommitsData[0]['commit']['message']}");
+    print("gitCommitsData: ${gitCommitsData[0]['commit']['committer']['date']}");
+    print("gitCommitsData: ${gitCommitsData[0]['author']['avatar_url']}");
+    print("gitCommitsData: ${gitCommitsData[0]['commit']['author']['name']}");
+    setState(() {
+      isloading = false;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    isloading = true;
+    getGitCommits();
+  }
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return isloading ? const CircularProgressIndicator() : Column(
       children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -36,7 +58,7 @@ class _CommitsScreenState extends State<CommitsScreen> {
         Expanded(
           child: ListView.builder(
             shrinkWrap: true,
-            itemCount: entries.length,
+            itemCount: 10,
             itemBuilder: (BuildContext context, int index) {
               return Container(
                 decoration: BoxDecoration(
@@ -49,8 +71,8 @@ class _CommitsScreenState extends State<CommitsScreen> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text('Entry ${entries[index]}', style: const TextStyle(color: Colors.white, fontSize: 16)),
-                        const Text('11/2/22', style: TextStyle(color: Colors.white70, fontSize: 12)),
+                        Flexible(child: Text(gitCommitsData[index]['commit']['message'], style: const TextStyle(color: Colors.white, fontSize: 16))),
+                        Text(gitCommitsData[index]['commit']['committer']['date'], style: const TextStyle(color: Colors.white70, fontSize: 12)),
                       ],
                     ),
                   ),
@@ -58,12 +80,12 @@ class _CommitsScreenState extends State<CommitsScreen> {
                     padding: const EdgeInsets.all(4.0),
                     child: Row(
                       children: [
-                        const CircleAvatar(
-                                radius: 12,
-                                backgroundImage: NetworkImage("https://avatars.githubusercontent.com/u/6655696?v=4"),
-                              ),
+                        CircleAvatar(
+                          radius: 12,
+                          backgroundImage: NetworkImage(gitCommitsData[index]['author']['avatar_url']),
+                        ),
                         const SizedBox(width: 8),
-                        Text('Entry ${entries[index]}', style: const TextStyle(color: Colors.white70, fontSize: 12)),
+                        Text(gitCommitsData[index]['commit']['author']['name'], style: const TextStyle(color: Colors.white70, fontSize: 12)),
                       ]
                     ),
                   ), 
