@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_commit_list_app/assets/commit_icon.dart';
 import 'package:flutter_commit_list_app/http/http_service.dart';
 
 class UserProfileScreen extends StatefulWidget {

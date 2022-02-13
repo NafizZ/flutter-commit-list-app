@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_commit_list_app/assets/commit_icon.dart';
 import 'package:flutter_commit_list_app/screens/commits_screen.dart';
 import 'package:flutter_commit_list_app/screens/user_profile_screen.dart';
 
@@ -53,7 +54,7 @@ class _MyHomePageState extends State<MyHomePage> {
         selectedItemColor: Colors.blueAccent,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.ac_unit),
+            icon: Icon(CommitIcon.gitCommitIcon),
             label: 'Commits',
           ),
           BottomNavigationBarItem(

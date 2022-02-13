@@ -71,7 +71,13 @@ class _CommitsScreenState extends State<CommitsScreen> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Flexible(child: Text(gitCommitsData[index]['commit']['message'], style: const TextStyle(color: Colors.white, fontSize: 16))),
+                        Flexible(
+                          child: Text(gitCommitsData[index]['commit']['message'],
+                                     style: const TextStyle(color: Colors.white, fontSize: 16),
+                                     overflow: TextOverflow.ellipsis,
+                                     maxLines: 3
+                                 ),
+                        ),
                         Text(gitCommitsData[index]['commit']['committer']['date'], style: const TextStyle(color: Colors.white70, fontSize: 12)),
                       ],
                     ),
