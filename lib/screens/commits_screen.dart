@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_commit_list_app/http/http_service.dart';
+import 'package:intl/intl.dart';
 
 class CommitsScreen extends StatefulWidget {
   const CommitsScreen({ Key? key }) : super(key: key);
@@ -12,18 +13,42 @@ class _CommitsScreenState extends State<CommitsScreen> {
   final HttpService httpService = HttpService();
   bool isloading = true;
   late List<dynamic> gitCommitsData;
-  final List<String> entries = <String>['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K'];
+  DateTime now = DateTime.now();
 
   getGitCommits() async{
     gitCommitsData = await httpService.getGitCommits();
     print("gitCommitsData: ${gitCommitsData[0]['commit']['message']}");
-    print("gitCommitsData: ${gitCommitsData[0]['commit']['committer']['date']}");
+    print("gitCommitsData: ${gitCommitsData[0]['commit']['committer']['date'].runtimeType}");
+    // var parsedDate = DateTime.parse(gitCommitsData[0]['commit']['committer']['date']);
+    // print('parsedDate: $parsedDate');
     print("gitCommitsData: ${gitCommitsData[0]['author']['avatar_url']}");
     print("gitCommitsData: ${gitCommitsData[0]['commit']['author']['name']}");
     setState(() {
       isloading = false;
     });
   }
+
+  String calculateDifference(String date) {
+    var parsedDate = DateTime.parse(date);
+   int defferencDate = DateTime(parsedDate.year, parsedDate.month, parsedDate.day).difference(DateTime(now.year, now.month, now.day)).inDays;
+    if(defferencDate == 0){
+      String formattedTime = DateFormat.Hm().format(parsedDate);
+      return formattedTime;
+    }
+    else if(defferencDate == -1){
+      return 'Yesterday';
+    }
+    else if(defferencDate < -1 && defferencDate > -7){
+      String formattedTime = DateFormat('EEEE').format(parsedDate);
+      return formattedTime ;
+    }
+    else {
+      String formattedTime = DateFormat.yMd().format(parsedDate);
+      return formattedTime ;
+    }
+  }
+
+
 
   @override
   void initState() {
@@ -78,7 +103,7 @@ class _CommitsScreenState extends State<CommitsScreen> {
                                      maxLines: 3
                                  ),
                         ),
-                        Text(gitCommitsData[index]['commit']['committer']['date'], style: const TextStyle(color: Colors.white70, fontSize: 12)),
+                        Text(calculateDifference(gitCommitsData[index]['commit']['committer']['date']), style: const TextStyle(color: Colors.white70, fontSize: 12)),
                       ],
                     ),
                   ),
