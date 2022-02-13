@@ -3,14 +3,13 @@ import 'package:http/http.dart';
 
 class HttpService {
   final String gitCommits = "https://api.github.com/repos/flutter/flutter/commits";
-  final String githubUser = "https://api.github.com/users/guidezpl";
+  final String githubUser = "https://api.github.com/users/jonahwilliams";
 
   Future<List> getGitCommits() async {
     Response res = await get(Uri.parse(gitCommits));
 
     if (res.statusCode == 200) {
       List<dynamic> body = jsonDecode(res.body);
-      print('body: $body');
       return body;
     } else {
       throw "Unable to retrieve data.";

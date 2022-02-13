@@ -14,15 +14,10 @@ class _CommitsScreenState extends State<CommitsScreen> {
   bool isloading = true;
   late List<dynamic> gitCommitsData;
   DateTime now = DateTime.now();
+  int numberOfCommits = 10;
 
   getGitCommits() async{
     gitCommitsData = await httpService.getGitCommits();
-    print("gitCommitsData: ${gitCommitsData[0]['commit']['message']}");
-    print("gitCommitsData: ${gitCommitsData[0]['commit']['committer']['date'].runtimeType}");
-    // var parsedDate = DateTime.parse(gitCommitsData[0]['commit']['committer']['date']);
-    // print('parsedDate: $parsedDate');
-    print("gitCommitsData: ${gitCommitsData[0]['author']['avatar_url']}");
-    print("gitCommitsData: ${gitCommitsData[0]['commit']['author']['name']}");
     setState(() {
       isloading = false;
     });
@@ -83,7 +78,7 @@ class _CommitsScreenState extends State<CommitsScreen> {
         Expanded(
           child: ListView.builder(
             shrinkWrap: true,
-            itemCount: 10,
+            itemCount: numberOfCommits,
             itemBuilder: (BuildContext context, int index) {
               return Container(
                 decoration: BoxDecoration(

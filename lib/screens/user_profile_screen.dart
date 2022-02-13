@@ -14,7 +14,6 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
   bool isloading = true;
 
   getGitHubUser() async{
-    // UserProfile userProfile;
     userProfile = await httpService.getGithubUser();
     setState(() {
       isloading = false;
@@ -46,7 +45,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
         const SizedBox(height: 6,),
         Text('@'+ (userProfile['login'] ?? ''), style: const TextStyle(color: Colors.white70, fontSize: 14)),
         const SizedBox(height: 20,),
-        Text('Bio:' + (userProfile['bio'] ?? ''), style: const TextStyle(color: Colors.white, fontSize: 18)),
+        Text('Bio: ' + (userProfile['bio'] ?? ''), style: const TextStyle(color: Colors.white, fontSize: 18)),
         const SizedBox(height: 18,),
         Text('Public Repos: ' + (userProfile['public_repos'].toString()),style: const TextStyle(color: Colors.white, fontSize: 18)),
         const SizedBox(height: 10,),
