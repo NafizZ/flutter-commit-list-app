@@ -25,15 +25,15 @@ class _CommitsScreenState extends State<CommitsScreen> {
 
   String calculateDifference(String date) {
     var parsedDate = DateTime.parse(date);
-   int defferencDate = DateTime(parsedDate.year, parsedDate.month, parsedDate.day).difference(DateTime(now.year, now.month, now.day)).inDays;
+    int defferencDate = DateTime(now.year, now.month, now.day).difference(DateTime(parsedDate.year, parsedDate.month, parsedDate.day)).inDays;
     if(defferencDate == 0){
       String formattedTime = DateFormat.Hm().format(parsedDate);
       return formattedTime;
     }
-    else if(defferencDate == -1){
+    else if(defferencDate == 1){
       return 'Yesterday';
     }
-    else if(defferencDate < -1 && defferencDate > -7){
+    else if(defferencDate >= 2 && defferencDate <= 5){
       String formattedTime = DateFormat('EEEE').format(parsedDate);
       return formattedTime ;
     }
